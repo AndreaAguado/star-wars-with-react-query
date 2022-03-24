@@ -1,11 +1,11 @@
-const getPlanets = async () => {
-    const res = await fetch('http://swapi.dev/api/planets/');
+const get = async (url) => {
+    const res = await fetch(url);
     return res.json();
 
 }
 
 const objectToExport = {
-    getPlanets,
+    get,
 }
 
 export default objectToExport;

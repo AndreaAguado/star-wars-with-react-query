@@ -3,7 +3,8 @@ import api from '../services/api';
 import Planet from "./Planet";
 
 const Planets = () => {
-    const { data, status } = useQuery('planets', api.getPlanets);
+    const getPlanets = () => api.get('http://swapi.dev/api/planets/');
+    const { data, status } = useQuery('planets', getPlanets);
     console.log(data);
 
     return (
