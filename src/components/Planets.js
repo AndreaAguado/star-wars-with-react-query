@@ -4,8 +4,11 @@ import Planet from "./Planet";
 
 const Planets = () => {
     const getPlanets = () => api.get('http://swapi.dev/api/planets/');
-    const { data, status } = useQuery('planets', getPlanets);
-    console.log(data);
+    // useQuery expects 2 arguments: a key ('planets') and a function ('getPlanets). Additionally it can receive a third parameter which is an object with multiple properties:
+    const { data, status } = useQuery('planets', getPlanets, {
+        onSuccess: () => console.log('planets data fetched correctly'), //Property receives arrow function as value
+        onError: () => console.log('planets data could not be fetched')//Propertyreceives arrow function as value
+    });
 
     return (
         <div>

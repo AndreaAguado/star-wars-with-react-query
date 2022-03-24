@@ -4,8 +4,10 @@ import Person from "./Person";
 
 const People = () => {
     const getPeople = () => api.get('https://swapi.dev/api/people/');
-    const { data, status } = useQuery('people', getPeople);
-    console.log(data);
+    const { data, status } = useQuery('people', getPeople, {
+        onSuccess: () => console.log('people data fetched correctly'), //Property receives arrow function as value
+        onError: () => console.log('people data could not be fetched')//Propertyreceives arrow function as value
+    });
 
     return (<div>
         <h2>People</h2>
