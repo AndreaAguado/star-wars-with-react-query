@@ -1,18 +1,27 @@
+import { useState } from "react";
 import { useQuery } from "react-query";
 import api from '../services/api';
 import Planet from "./Planet";
 
 const Planets = () => {
-    const getPlanets = () => api.get('http://swapi.dev/api/planets/');
+    const [page, setPage] = useState(1);
+    // const getPlanets = (page) => api.get(`http://swapi.dev/api/planets/?page=${page}`);
+
     // useQuery expects 2 arguments: a key ('planets') and a function ('getPlanets). Additionally it can receive a third parameter which is an object with multiple properties:
-    const { data, status } = useQuery('planets', getPlanets, {
+    const { data, status, isFetching, isFetched } = useQuery(['planets', page], () => api.get(`http://swapi.dev/api/planets/?page=${page}`), {
         onSuccess: () => console.log('planets data fetched correctly'), //Property receives arrow function as value
-        onError: () => console.log('planets data could not be fetched')//Propertyreceives arrow function as value
+        onError: () => console.log('planets data could not be fetched'),//Propertyreceives arrow function as value
+        keepPreviousData: true,
     });
 
     return (
         <div>
             <h2>Planets</h2>
+            <button onClick={() => { setPage(old => Math.max(old - 1, 1)) }}>Previous page</button>
+            <span>Page {page}</span>
+            <button onClick={() => { setPage(old => (!data || !data.next ? old : old + 1)) }}>Next page</button>
+            {isFetching && !isFetched && <p>Loading...</p>}
+
             {status === 'error' && <p>Error fetching the data from the API</p>
             }
             {status === 'loading' && <p>Loading data...</p>}
