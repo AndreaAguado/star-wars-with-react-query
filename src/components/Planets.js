@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useQuery } from "react-query";
 import api from '../services/api';
+import PagesBar from "./PagesBar";
 import Planet from "./Planet";
 
 const Planets = () => {
@@ -17,9 +18,7 @@ const Planets = () => {
     return (
         <div>
             <h2>Planets</h2>
-            <button onClick={() => { setPage(old => Math.max(old - 1, 1)) }}>Previous page</button>
-            <span>Page {page}</span>
-            <button onClick={() => { setPage(old => (!data || !data.next ? old : old + 1)) }}>Next page</button>
+            <PagesBar setPage={setPage} page={page} data={data} />
             {isFetching && !isFetched && <p>Loading...</p>}
 
             {status === 'error' && <p>Error fetching the data from the API</p>
