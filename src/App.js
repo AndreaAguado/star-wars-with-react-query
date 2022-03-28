@@ -20,7 +20,6 @@ function App() {
       </div>
       <ReactQueryDevtools initialIsOpen={false} />
     </>
-
   );
 }
 

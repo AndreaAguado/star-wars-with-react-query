@@ -1,18 +1,13 @@
 import { useState } from "react";
-import { useQuery } from "react-query";
-import api from '../services/api';
+import { useQueryPeople } from '../services/api';
 import PagesBar from "./PagesBar";
 import Person from "./Person";
 
 
 const People = () => {
     const [page, setPage] = useState(1);
-    // const getPeople = () => api.get('https://swapi.dev/api/people/');
-    const { data, status, isFetching, isFetched } = useQuery(['people', page], () => api.get(`https://swapi.dev/api/people/?page=${page}`), {
-        onSuccess: () => console.log('people data fetched correctly'), //Property receives arrow function as value
-        onError: () => console.log('people data could not be fetched'),//Propertyreceives arrow function as value
-        keepPreviousData: true,
-    });
+
+    const { data, status, isFetching, isFetched } = useQueryPeople(page);
 
     return (
         <div>
@@ -32,7 +27,6 @@ const People = () => {
                             </li>
                         ))
                     }
-
                 </ul>}
         </div>
     );
